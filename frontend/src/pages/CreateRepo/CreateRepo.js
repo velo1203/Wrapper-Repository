@@ -51,6 +51,7 @@ function Createrepo() {
             navigate("/dashboard"); // 성공 시 리디렉션할 경로를 지정하세요.
         } catch (error) {
             console.error("Repository creation failed:", error);
+            alert("Repository creation failed");
         }
     };
 
@@ -89,7 +90,7 @@ function Createrepo() {
                         <StyledImportant>*</StyledImportant>
                     </p>
                     <Button type="button" onClick={handleZipUploadClick}>
-                        Zip Upload
+                        {zipFile ? "change Zip" : "Upload Zip"}
                     </Button>
                     <input
                         type="file"
@@ -99,7 +100,6 @@ function Createrepo() {
                         onChange={handleFileChange}
                     />
                 </StyledCreateRepoZip>
-
                 <h3>Example URL</h3>
                 <StyledExampleLink>
                     http://localhost:3000/{username}/{repoName}

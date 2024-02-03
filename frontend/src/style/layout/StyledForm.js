@@ -30,6 +30,7 @@ export const StyledFormContainer = styled.div`
     flex-direction: column;
     text-align: center;
     gap: 35px;
+    box-shadow: var(--BoxShadow);
 `;
 
 export const StyledError = styled.p`

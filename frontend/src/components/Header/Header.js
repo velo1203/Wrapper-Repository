@@ -33,13 +33,13 @@ function Header() {
                             >
                                 {username}
                             </StyledOption>
-                            <StyledOption
+                            <Button
                                 onClick={() => {
                                     handleLogout();
                                 }}
                             >
                                 logout
-                            </StyledOption>
+                            </Button>
                         </>
                     ) : (
                         <>

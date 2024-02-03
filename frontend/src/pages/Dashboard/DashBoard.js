@@ -15,13 +15,21 @@ import useAuthStore from "../../store/userStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import useApiErrorHandler from "../../utils/Hooks/ErrorHandler";
+import RepoDetail from "./RepoDetail";
 function DashBoard() {
     const chevronDown = <FontAwesomeIcon icon={faChevronDown} />;
     const username = useAuthStore((state) => state.username);
     const navigate = useNavigate();
     const [repos, setRepos] = useState([]); // 리포지토리 목록을 저장할 상태
     const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
+    const [detail, setDetail] = useState(null); // 상세보기 모달 상태
     const handleError = useApiErrorHandler();
+
+    const handleDetail = (i) => {
+        if (detail === i) setDetail(null);
+        else setDetail(i);
+    };
+
     useEffect(() => {
         const fetchRepoList = async () => {
             try {
@@ -44,7 +52,7 @@ function DashBoard() {
     return (
         <StyledDefaultPage>
             <StyledDashBoardHeader>
-                <h1>Repository</h1>
+                <h1>{username}'s Repository</h1>
                 <StyledDashBoardHeaderOptions>
                     <Input
                         placeholder="검색어 입력.."
@@ -81,19 +89,34 @@ function DashBoard() {
                 <tbody>
                     {filteredRepos.length > 0 ? (
                         filteredRepos.map((repo, i) => (
-                            <tr key={i}>
-                                <TableCell>{repo.name}</TableCell>
-                                <TableCell>{repo.description}</TableCell>
-                                <TableCell>
-                                    <a
-                                        href={`${window.location.origin}/${username}/${repo.name}`}
+                            <React.Fragment key={i}>
+                                <tr>
+                                    <TableCell>{repo.name}</TableCell>
+                                    <TableCell>{repo.description}</TableCell>
+                                    <TableCell>
+                                        <a
+                                            href={`${window.location.origin}/${username}/${repo.name}`}
+                                        >
+                                            {window.location.origin}/{username}/
+                                            {repo.name}
+                                        </a>
+                                    </TableCell>
+                                    <TableCell
+                                        onClick={() => {
+                                            handleDetail(i);
+                                        }}
                                     >
-                                        {window.location.origin}/{username}/
-                                        {repo.name}
-                                    </a>
-                                </TableCell>
-                                <TableCell>{chevronDown}</TableCell>
-                            </tr>
+                                        {chevronDown}
+                                    </TableCell>
+                                </tr>
+                                {detail === i && (
+                                    <tr>
+                                        <TableCell colSpan="4">
+                                            <RepoDetail id={repo.id} />
+                                        </TableCell>
+                                    </tr>
+                                )}
+                            </React.Fragment>
                         ))
                     ) : (
                         <tr>

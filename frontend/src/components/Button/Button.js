@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Button = styled.button`
     min-height: 40px;
-    width: ${(props) => props.width || "125px"};
+    width: ${(props) => props.width || "100px"};
     font-size: 15px;
     background-color: ${(props) =>
         props.type === "outlined" ? "var(--White)" : "var(--Black)"};
@@ -14,6 +14,7 @@ export const Button = styled.button`
     cursor: pointer;
     outline: none;
     transition: all 0.2s ease-in-out;
+    box-shadow: var(--BoxShadow);
 
     &:hover {
         opacity: 0.8;

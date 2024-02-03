@@ -9,6 +9,8 @@ export const StyledHeader = styled.div`
     height: 70px;
     width: 100%;
     padding: 25px;
+    box-shadow: var(--BoxShadow);
+    background-color: var(--White);
 `;
 
 export const StyledHeaderContainer = styled.div`
