@@ -14,12 +14,14 @@ import { getRepoList } from "../../service/auth/repo";
 import useAuthStore from "../../store/userStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import useApiErrorHandler from "../../utils/Hooks/ErrorHandler";
 function DashBoard() {
     const chevronDown = <FontAwesomeIcon icon={faChevronDown} />;
     const username = useAuthStore((state) => state.username);
     const navigate = useNavigate();
     const [repos, setRepos] = useState([]); // 리포지토리 목록을 저장할 상태
     const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
+    const handleError = useApiErrorHandler();
     useEffect(() => {
         const fetchRepoList = async () => {
             try {
@@ -27,9 +29,7 @@ function DashBoard() {
                 setRepos(response); // 상태 업데이트
             } catch (error) {
                 console.error("Failed to fetch repository list:", error);
-                if (error.response.status === 401) {
-                    navigate("/login");
-                }
+                handleError(error);
                 // 에러 처리, 예를 들어 사용자에게 알림 표시
             }
         };

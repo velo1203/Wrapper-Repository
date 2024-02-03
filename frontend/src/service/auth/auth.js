@@ -28,6 +28,7 @@ const register = async (email, password, userName) => {
         return response.data;
     } catch (error) {
         console.error("GET Request Error:", error);
+
         throw error;
     }
 };
