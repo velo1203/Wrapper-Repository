@@ -32,7 +32,7 @@ function DashBoard() {
         };
 
         fetchRepoList(); // 함수 실행
-    }, []); // 빈 의존성 배열을 전달하여 컴포넌트 마운트 시에만 실행되도록 함
+    }, [navigate]); // 빈 의존성 배열을 전달하여 컴포넌트 마운트 시에만 실행되도록 함
     const filteredRepos = repos.filter(
         (repo) =>
             repo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -74,8 +74,10 @@ function DashBoard() {
                                 <TableCell>{repo.name}</TableCell>
                                 <TableCell>{repo.description}</TableCell>
                                 <TableCell>
-                                    <a>
-                                        http://localhost:3000/{username}/
+                                    <a
+                                        href={`${window.location.origin}/${username}/${repo.name}`}
+                                    >
+                                        {window.location.origin}/{username}/
                                         {repo.name}
                                     </a>
                                 </TableCell>

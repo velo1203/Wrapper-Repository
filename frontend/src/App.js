@@ -6,6 +6,7 @@ import DashBoard from "./pages/Dashboard/DashBoard";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Createrepo from "./pages/CreateRepo/CreateRepo";
+import NotFound from "./pages/NotFound/404";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
             <Header />
 
             <Routes>
+                <Route path="*" element={<NotFound />} />
                 <Route path="/" element={<Main />} />
                 <Route path="/dashboard">
                     <Route path="" element={<DashBoard />} />

@@ -26,7 +26,13 @@ function Header() {
                 <StyledHeaderOptions>
                     {username !== null ? (
                         <>
-                            <StyledOption>{username}</StyledOption>
+                            <StyledOption
+                                onClick={() => {
+                                    navigate("/dashboard");
+                                }}
+                            >
+                                {username}
+                            </StyledOption>
                             <StyledOption
                                 onClick={() => {
                                     handleLogout();

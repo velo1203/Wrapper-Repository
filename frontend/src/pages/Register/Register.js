@@ -22,7 +22,7 @@ function Register() {
             return;
         }
         try {
-            const response = await register(email, password, userName);
+            await register(email, password, userName);
             navigate("/login");
         } catch (error) {
             console.error(error);
