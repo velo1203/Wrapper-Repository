@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+    StyledError,
     StyledForm,
     StyledFormContainer,
     StyledFormHeader,
@@ -17,13 +18,14 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const setAuth = useAuthStore((state) => state.setAuth);
+    const [error, setError] = useState("");
     const handleLogin = async () => {
         try {
             const response = await login(email, password);
             setAuth({ token: response.token, username: response.username });
             navigate("/dashboard");
         } catch (error) {
-            console.error(error);
+            setError(error.response.data.error);
         }
     };
     return (
@@ -36,6 +38,7 @@ function Login() {
                 <StyledFormInputField>
                     <Input
                         placeholder="Email"
+                        type="email"
                         onChange={(e) => {
                             setEmail(e.target.value);
                         }}
@@ -47,6 +50,7 @@ function Login() {
                             setPassword(e.target.value);
                         }}
                     />
+                    {error && <StyledError>{error}</StyledError>}
                 </StyledFormInputField>
                 <StyledFormOptions>
                     <p>Forgot password</p>

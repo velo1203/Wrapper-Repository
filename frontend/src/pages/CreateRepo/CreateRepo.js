@@ -14,8 +14,10 @@ import { Input } from "../../components/Input/Input";
 import { Button } from "../../components/Button/Button";
 import { createRepo } from "../../service/auth/repo";
 import { StyledDefaultPage } from "../../style/layout/StyledDefaultPage";
+import useAuthStore from "../../store/userStore";
 
 function Createrepo() {
+    const username = useAuthStore((state) => state.username);
     const [repoName, setRepoName] = useState("");
     const [repoDescription, setRepoDescription] = useState("");
     const [zipFile, setZipFile] = useState(null);
@@ -100,7 +102,7 @@ function Createrepo() {
 
                 <h3>Example URL</h3>
                 <StyledExampleLink>
-                    http://localhost:3000/hosung/{repoName}
+                    http://localhost:3000/{username}/{repoName}
                 </StyledExampleLink>
 
                 <hr />

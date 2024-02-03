@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+    StyledError,
     StyledForm,
     StyledFormContainer,
     StyledFormHeader,
@@ -16,6 +17,7 @@ function Register() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [userName, setUserName] = useState("");
+    const [error, setError] = useState("");
     const handleRegister = async () => {
         if (password !== confirmPassword) {
             alert("Password and Confirm Password do not match");
@@ -25,7 +27,7 @@ function Register() {
             await register(email, password, userName);
             navigate("/login");
         } catch (error) {
-            console.error(error);
+            setError(error.response.data.error);
         }
     };
 
@@ -39,6 +41,7 @@ function Register() {
                 <StyledFormInputField>
                     <Input
                         placeholder="Email"
+                        type="email"
                         onChange={(e) => {
                             setEmail(e.target.value);
                         }}
@@ -63,6 +66,7 @@ function Register() {
                             setConfirmPassword(e.target.value);
                         }}
                     />
+                    {error && <StyledError>{error}</StyledError>}
                 </StyledFormInputField>
                 <Button
                     width="100%"

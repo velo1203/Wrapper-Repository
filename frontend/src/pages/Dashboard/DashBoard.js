@@ -12,7 +12,10 @@ import { Input } from "../../components/Input/Input";
 import { useNavigate } from "react-router-dom";
 import { getRepoList } from "../../service/auth/repo";
 import useAuthStore from "../../store/userStore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 function DashBoard() {
+    const chevronDown = <FontAwesomeIcon icon={faChevronDown} />;
     const username = useAuthStore((state) => state.username);
     const navigate = useNavigate();
     const [repos, setRepos] = useState([]); // 리포지토리 목록을 저장할 상태
@@ -61,15 +64,23 @@ function DashBoard() {
             <StyledDashboardTable>
                 <thead>
                     <tr>
-                        <TableHeaderCell>Name</TableHeaderCell>
-                        <TableHeaderCell>Description</TableHeaderCell>
-                        <TableHeaderCell>URL</TableHeaderCell>
-                        <TableHeaderCell>Status</TableHeaderCell>
+                        <TableHeaderCell style={{ width: "20%" }}>
+                            Repo Name
+                        </TableHeaderCell>
+                        <TableHeaderCell style={{ width: "20%" }}>
+                            Description
+                        </TableHeaderCell>
+                        <TableHeaderCell style={{ width: "40%" }}>
+                            URL
+                        </TableHeaderCell>
+                        <TableHeaderCell
+                            style={{ width: "5%" }}
+                        ></TableHeaderCell>
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredRepos.map((repo, i) => {
-                        return (
+                    {filteredRepos.length > 0 ? (
+                        filteredRepos.map((repo, i) => (
                             <tr key={i}>
                                 <TableCell>{repo.name}</TableCell>
                                 <TableCell>{repo.description}</TableCell>
@@ -81,10 +92,22 @@ function DashBoard() {
                                         {repo.name}
                                     </a>
                                 </TableCell>
-                                <TableCell>ON</TableCell>
+                                <TableCell>{chevronDown}</TableCell>
                             </tr>
-                        );
-                    })}
+                        ))
+                    ) : (
+                        <tr>
+                            <TableCell
+                                colSpan="4"
+                                style={{
+                                    textAlign: "center",
+                                    fontSize: "1.3rem",
+                                }}
+                            >
+                                레포지토리가 없습니다.
+                            </TableCell>
+                        </tr>
+                    )}
                 </tbody>
             </StyledDashboardTable>
         </StyledDefaultPage>

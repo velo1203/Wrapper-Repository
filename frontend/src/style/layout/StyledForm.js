@@ -32,6 +32,11 @@ export const StyledFormContainer = styled.div`
     gap: 35px;
 `;
 
+export const StyledError = styled.p`
+    color: var(--Red);
+    font-size: 15px;
+`;
+
 export const StyledFormInputField = styled.div`
     display: flex;
     flex-direction: column;
