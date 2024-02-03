@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+:root {
+    --Black: #000000;
+    --Gray: rgba(0, 0, 0, 0.5);
+    --White: #ffffff;
+    --BorderColor: rgba(0, 0, 0, 0.1);
+    --Blue: #1e90ff;
+    --Red: #fb5d5d;
+}
