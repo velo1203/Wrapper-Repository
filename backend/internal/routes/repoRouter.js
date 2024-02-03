@@ -51,4 +51,17 @@ router.get("/repository", authenticate, (req, res) => {
     }
 });
 
+router.delete("/repository/:id", authenticate, (req, res) => {
+    try {
+        const repoID = req.params.id;
+
+        repositoryController.DeleteRepository(repoID, req.user.id, (err) => {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ message: "Repository deleted successfully" });
+        });
+    } catch (err) {
+        return res.status(400).json({ error: err.message });
+    }
+});
+
 module.exports = router;

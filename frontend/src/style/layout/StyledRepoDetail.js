@@ -6,5 +6,10 @@ export const StyledRepoDetail = styled.div`
     flex-direction: column;
     gap: 20px;
     padding: 20px;
-    height: 400px;
+`;
+
+export const StyledRepoDetailFooter = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
 `;

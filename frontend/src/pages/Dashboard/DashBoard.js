@@ -24,6 +24,7 @@ function DashBoard() {
     const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
     const [detail, setDetail] = useState(null); // 상세보기 모달 상태
     const handleError = useApiErrorHandler();
+    const [dependency, setDependency] = useState(true);
 
     const handleDetail = (i) => {
         if (detail === i) setDetail(null);
@@ -43,7 +44,12 @@ function DashBoard() {
         };
 
         fetchRepoList(); // 함수 실행
-    }, [navigate]); // 빈 의존성 배열을 전달하여 컴포넌트 마운트 시에만 실행되도록 함
+    }, [navigate, dependency]);
+
+    const handleDeleteSuccess = () => {
+        // 삭제 성공 시 의존성 업데이트
+        setDependency(!dependency);
+    };
     const filteredRepos = repos.filter(
         (repo) =>
             repo.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -112,7 +118,13 @@ function DashBoard() {
                                 {detail === i && (
                                     <tr>
                                         <TableCell colSpan="4">
-                                            <RepoDetail id={repo.id} />
+                                            <RepoDetail
+                                                repo={repo}
+                                                username={username}
+                                                handleDeleteSuccess={
+                                                    handleDeleteSuccess
+                                                }
+                                            />
                                         </TableCell>
                                     </tr>
                                 )}

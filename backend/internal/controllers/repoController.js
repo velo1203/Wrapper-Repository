@@ -6,6 +6,7 @@ const repository = new Repository(db); // Repository 클래스의 인스턴스 �
 const path = require("path");
 const { deleteTempFile } = require("../utils/fileUtils");
 const { extractZipContents } = require("../utils/zipUtils");
+const fs = require("fs");
 
 // 레포지토리 생성
 // 레포지토리 생성 함수
@@ -59,6 +60,31 @@ exports.CreateRepository = (name, description, userId, zipfile, callback) => {
 exports.GetRepository = (repositoryId, callback) => {
     // 레포지토리 ID로 레포지토리 조회
     repository.findById(repositoryId, callback);
+};
+
+exports.DeleteRepository = (repositoryId, userID, callback) => {
+    repository.findById(repositoryId, (error, repo) => {
+        if (error) return callback(error);
+        if (!repo) return callback(new Error("Repository not found"));
+        if (repo.user_id !== userID) return callback(new Error("Unauthorized"));
+        repository.deleteRepository(repositoryId, userID, (error) => {
+            if (error) return callback(error);
+            user.findByUserId(userID, (error, user) => {
+                if (error) return callback(error);
+                const repoPath = path.join(
+                    process.cwd(),
+                    "cmd",
+                    "repository",
+                    user.username,
+                    repo.name
+                );
+                fs.rm(repoPath, { recursive: true }, (err) => {
+                    if (err) return callback(err);
+                    callback(null);
+                });
+            });
+        });
+    });
 };
 
 exports.GetRepositoryByUserId = (userId, callback) => {

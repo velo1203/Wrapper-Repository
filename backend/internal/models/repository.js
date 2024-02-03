@@ -13,6 +13,16 @@ class Repository {
         );
     }
 
+    deleteRepository(id, userid, callback) {
+        return this.db.run(
+            "DELETE FROM repository WHERE id = ? AND user_id = ?",
+            [id, userid],
+            function (err) {
+                callback(err);
+            }
+        );
+    }
+
     findByName(name, userId, callback) {
         return this.db.get(
             "SELECT * FROM repository WHERE name = ? AND user_id = ?",

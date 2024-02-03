@@ -22,6 +22,17 @@ const createRepo = async (name, description, zipfile) => {
     }
 };
 
+const deleteRepo = async (repoId) => {
+    try {
+        const apiClient = getApiClient();
+        const response = await apiClient.delete(`/api/repository/${repoId}`);
+        return response.data;
+    } catch (error) {
+        console.error("DELETE Request Error:", error);
+        throw error;
+    }
+};
+
 const getRepoList = async () => {
     try {
         const apiClient = getApiClient();
@@ -33,4 +44,4 @@ const getRepoList = async () => {
     }
 };
 
-export { createRepo, getRepoList };
+export { createRepo, getRepoList, deleteRepo };
