@@ -5,7 +5,10 @@ function useApiErrorHandler() {
     const navigate = useNavigate();
     const logout = useAuthStore((state) => state.logout);
     const handleError = (error) => {
-        if (error.response && error.response.status === 403) {
+        if (
+            (error.response && error.response.status === 403) ||
+            error.response.status === 401
+        ) {
             logout();
             navigate("/login");
         }
