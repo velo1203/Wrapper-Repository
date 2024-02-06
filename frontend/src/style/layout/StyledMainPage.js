@@ -19,7 +19,7 @@ export const StyledMainPageHeader = styled.div`
 
 export const StyledSponsor = styled.div`
     position: absolute;
-    bottom: 50px;
+    bottom: 100px;
     font-size: 15px;
     text-align: center;
     cursor: pointer;
