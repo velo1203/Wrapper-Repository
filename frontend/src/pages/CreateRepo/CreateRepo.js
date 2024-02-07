@@ -102,7 +102,7 @@ function Createrepo() {
                 </StyledCreateRepoZip>
                 <h3>Example URL</h3>
                 <StyledExampleLink>
-                    http://localhost:3000/{username}/{repoName}
+                    {window.location.origin}/{username}/{repoName}
                 </StyledExampleLink>
 
                 <hr />

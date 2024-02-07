@@ -74,5 +74,4 @@ function Login() {
         </StyledForm>
     );
 }
-
 export default Login;
