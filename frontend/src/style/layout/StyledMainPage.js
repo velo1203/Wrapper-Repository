@@ -17,7 +17,7 @@ export const StyledMainPageHeader = styled.div`
     }
 `;
 
-export const StyledSponsor = styled.div`
+export const StyledInfo = styled.div`
     position: absolute;
     bottom: 100px;
     font-size: 15px;
@@ -39,11 +39,45 @@ export const StyledMainPageContent = styled.div`
 export const StyledMainContainer = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
     padding: 50px;
     margin: 0 auto;
     max-width: 1200px;
     p {
         font-size: 23px;
+    }
+`;
+
+export const StyledMainSections = styled.div`
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+`;
+
+export const StyledSection = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    p {
+        font-size: 20px;
+    }
+    h1 {
+        font-size: 24px;
+    }
+`;
+
+export const SectionIconList = styled.div`
+    display: flex;
+    gap: 20px;
+    font-size: 20px;
+`;
+
+export const SectionIcon = styled.div`
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 30px;
+    &:hover {
+        opacity: 0.8;
     }
 `;

@@ -1,15 +1,25 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button/Button";
 import {
+    SectionIcon,
+    SectionIconList,
+    StyledInfo,
     StyledMainContainer,
     StyledMainPage,
     StyledMainPageContent,
     StyledMainPageHeader,
+    StyledMainSections,
+    StyledSection,
     StyledSponsor,
 } from "../../style/layout/StyledMainPage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { useRef } from "react";
+import {
+    faGithub,
+    faInstagram,
+    faNpm,
+} from "@fortawesome/free-brands-svg-icons";
 
 function Main() {
     const navigate = useNavigate();
@@ -29,15 +39,60 @@ function Main() {
                 >
                     시작하기
                 </Button>
-                <StyledSponsor onClick={scrollToContent}>
-                    <p>Show sponsor</p>
+                <StyledInfo onClick={scrollToContent}>
+                    <p>Show Info</p>
                     <FontAwesomeIcon icon={faChevronDown} />
-                </StyledSponsor>
+                </StyledInfo>
             </StyledMainPageHeader>
             <StyledMainPageContent ref={contentRef}>
                 <StyledMainContainer>
-                    <h1>Sponsor</h1>
-                    <p>Sponsor List</p>
+                    <h1>Information</h1>
+                    <StyledMainSections>
+                        <StyledSection>
+                            <h1>Sponsor</h1>
+                        </StyledSection>
+                        <StyledSection>
+                            <h1>Copyright</h1>
+                            <p>ⓒ 2024. Devho all rights reserved.</p>
+                            <p>
+                                This project is licensed under the{" "}
+                                <strong>MIT</strong> License
+                            </p>
+                        </StyledSection>
+                        <StyledSection>
+                            <h1>Dev SNS</h1>
+                            <SectionIconList>
+                                <SectionIcon
+                                    onClick={() => {
+                                        window.open(
+                                            "https://www.instagram.com/dev._ho/"
+                                        );
+                                    }}
+                                >
+                                    <FontAwesomeIcon icon={faInstagram} />
+                                </SectionIcon>
+                                <SectionIcon
+                                    onClick={() => {
+                                        window.open(
+                                            "https://github.com/velo1203"
+                                        );
+                                    }}
+                                >
+                                    <FontAwesomeIcon icon={faGithub} />
+                                </SectionIcon>
+                                <SectionIcon>
+                                    <FontAwesomeIcon
+                                        icon={faNpm}
+                                        onClick={() => {
+                                            window.open(
+                                                "https://www.npmjs.com/~devho"
+                                            );
+                                        }}
+                                    />
+                                </SectionIcon>
+                            </SectionIconList>
+                        </StyledSection>
+                    </StyledMainSections>
                 </StyledMainContainer>
             </StyledMainPageContent>
         </StyledMainPage>
