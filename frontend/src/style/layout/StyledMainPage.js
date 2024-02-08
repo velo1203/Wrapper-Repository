@@ -33,10 +33,10 @@ export const StyledInfo = styled.div`
 export const StyledMainPageContent = styled.div`
     height: 400px;
     background-color: var(--Black);
-    color: var(--White);
 `;
 
 export const StyledMainContainer = styled.div`
+    color: var(--White);
     display: flex;
     flex-direction: column;
     gap: 30px;

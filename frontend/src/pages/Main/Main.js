@@ -60,7 +60,7 @@ function Main() {
                             </p>
                         </StyledSection>
                         <StyledSection>
-                            <h1>Dev SNS</h1>
+                            <h1>Follow my SNS</h1>
                             <SectionIconList>
                                 <SectionIcon
                                     onClick={() => {

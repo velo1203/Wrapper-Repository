@@ -22,7 +22,7 @@ export const StyledFormHeader = styled.div`
 `;
 
 export const StyledFormContainer = styled.div`
-    width: 400px;
+    width: 425px;
     padding: 30px;
     border: 1px solid var(--BorderColor);
     border-radius: 10px;
@@ -30,7 +30,6 @@ export const StyledFormContainer = styled.div`
     flex-direction: column;
     text-align: center;
     gap: 35px;
-    box-shadow: var(--BoxShadow);
 `;
 
 export const StyledError = styled.p`
@@ -42,6 +41,9 @@ export const StyledFormInputField = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    input {
+        height: 50px;
+    }
 `;
 
 export const StyledFormOptions = styled.div`

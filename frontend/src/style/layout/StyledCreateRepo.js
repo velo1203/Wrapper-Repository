@@ -16,8 +16,11 @@ export const StyledCreateRepoField = styled.div`
     flex-direction: column;
 
     label {
-        font-size: 18px;
+        font-size: 16px;
         margin: 5px;
+    }
+    input {
+        height: 50px;
     }
 `;
 

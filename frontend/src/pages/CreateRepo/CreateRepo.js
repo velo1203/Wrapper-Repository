@@ -64,7 +64,7 @@ function Createrepo() {
                     <label>Repository Name</label>
                     <Input
                         type="text"
-                        placeholder="Name"
+                        placeholder="Repo Name"
                         value={repoName}
                         onChange={(e) => setRepoName(e.target.value)}
                     />
