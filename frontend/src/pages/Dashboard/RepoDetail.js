@@ -38,6 +38,10 @@ function RepoDetail({ repo, username, handleDeleteSuccess }) {
                     <h1>created at</h1>
                     <p>{repo.created_at}</p>
                 </StyledRepoDetailSection>
+                <StyledRepoDetailSection>
+                    <h1>Visits</h1>
+                    <p>{repo.visits}</p>
+                </StyledRepoDetailSection>
             </StyledRepoDetailWrapper>
 
             <StyledRepoDetailFooter>
