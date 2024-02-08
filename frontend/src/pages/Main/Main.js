@@ -20,6 +20,7 @@ import {
     faInstagram,
     faNpm,
 } from "@fortawesome/free-brands-svg-icons";
+import BuyMeACoffee from "../../components/BuyMeACoffee/BuyMeACofee";
 
 function Main() {
     const navigate = useNavigate();
@@ -49,7 +50,8 @@ function Main() {
                     <h1>Information</h1>
                     <StyledMainSections>
                         <StyledSection>
-                            <h1>Sponsor</h1>
+                            <h1>Donate!</h1>
+                            <BuyMeACoffee />
                         </StyledSection>
                         <StyledSection>
                             <h1>Copyright</h1>
