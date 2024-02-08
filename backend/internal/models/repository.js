@@ -3,55 +3,102 @@ class Repository {
         this.db = db;
     }
 
-    createRepository(name, description, userId, callback) {
-        return this.db.run(
-            "INSERT INTO repository (name, description, user_id) VALUES (?, ?, ?)",
-            [name, description, userId],
-            function (err) {
-                callback(err, this.lastID);
-            }
-        );
+    createRepository(name, description, userId) {
+        return new Promise((resolve, reject) => {
+            this.db.run(
+                "INSERT INTO repository (name, description, user_id) VALUES (?, ?, ?)",
+                [name, description, userId],
+                function (err) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(this.lastID);
+                    }
+                }
+            );
+        });
     }
 
-    deleteRepository(id, userid, callback) {
-        return this.db.run(
-            "DELETE FROM repository WHERE id = ? AND user_id = ?",
-            [id, userid],
-            function (err) {
-                callback(err);
-            }
-        );
+    deleteRepository(id, userId) {
+        return new Promise((resolve, reject) => {
+            this.db.run(
+                "DELETE FROM repository WHERE id = ? AND user_id = ?",
+                [id, userId],
+                function (err) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                }
+            );
+        });
     }
 
-    findByName(name, userId, callback) {
-        return this.db.get(
-            "SELECT * FROM repository WHERE name = ? AND user_id = ?",
-            [name, userId],
-            function (err, row) {
-                callback(err, row);
-            }
-        );
+    findByName(name, userId) {
+        return new Promise((resolve, reject) => {
+            this.db.get(
+                "SELECT * FROM repository WHERE name = ? AND user_id = ?",
+                [name, userId],
+                function (err, row) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(row);
+                    }
+                }
+            );
+        });
     }
 
-    findById(id, callback) {
-        return this.db.get(
-            "SELECT * FROM repository WHERE id = ?",
-            [id],
-            function (err, row) {
-                callback(err, row);
-            }
-        );
+    findById(id) {
+        return new Promise((resolve, reject) => {
+            this.db.get(
+                "SELECT * FROM repository WHERE id = ?",
+                [id],
+                function (err, row) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(row);
+                    }
+                }
+            );
+        });
     }
 
-    findAll(userId, callback) {
-        return this.db.all(
-            "SELECT * FROM repository WHERE user_id = ?",
-            [userId],
-            function (err, rows) {
-                callback(err, rows);
-            }
-        );
+    findAll(userId) {
+        return new Promise((resolve, reject) => {
+            this.db.all(
+                "SELECT * FROM repository WHERE user_id = ?",
+                [userId],
+                function (err, rows) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(rows);
+                    }
+                }
+            );
+        });
     }
+
+    incrementVisits(repoId) {
+        return new Promise((resolve, reject) => {
+            this.db.run(
+                "UPDATE repository SET visits = visits + 1 WHERE id = ?",
+                [repoId],
+                function (err) {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                }
+            );
+        });
+    }
+    
 }
 
 module.exports = Repository;

@@ -8,16 +8,19 @@ db.serialize(() => {
         "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT UNIQUE,username TEXT, password TEXT)"
     );
 
-    db.run(
-        `CREATE TABLE IF NOT EXISTS repository (
-            id INTEGER PRIMARY KEY AUTOINCREMENT, 
-            name TEXT, 
-            description TEXT, 
-            user_id INTEGER, 
-            FOREIGN KEY(user_id) REFERENCES users(id),
-            UNIQUE(user_id, name)
-        )`
-    );
+    db.run(`
+    CREATE TABLE IF NOT EXISTS repository (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        description TEXT,
+        user_id INTEGER,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        visits INTEGER DEFAULT 0,
+        FOREIGN KEY(user_id) REFERENCES users(id),
+        UNIQUE(user_id, name)
+    )
+`);
 });
 
 module.exports = db;

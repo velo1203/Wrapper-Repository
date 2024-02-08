@@ -2,6 +2,8 @@ import React from "react";
 import {
     StyledRepoDetail,
     StyledRepoDetailFooter,
+    StyledRepoDetailSection,
+    StyledRepoDetailWrapper,
 } from "../../style/layout/StyledRepoDetail";
 import { Button } from "../../components/Button/Button";
 import PopupWrapper from "../../components/PopupWrapper/PopupWrapper";
@@ -27,7 +29,17 @@ function RepoDetail({ repo, username, handleDeleteSuccess }) {
     return (
         <StyledRepoDetail>
             <h1>Repo Detail</h1>
-            <p>some info...</p>
+            <StyledRepoDetailWrapper>
+                <StyledRepoDetailSection>
+                    <h1>Updated at</h1>
+                    <p>{repo.updated_at}</p>
+                </StyledRepoDetailSection>
+                <StyledRepoDetailSection>
+                    <h1>created at</h1>
+                    <p>{repo.created_at}</p>
+                </StyledRepoDetailSection>
+            </StyledRepoDetailWrapper>
+
             <StyledRepoDetailFooter>
                 <Button
                     type="outlined"

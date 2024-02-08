@@ -7,61 +7,41 @@ const path = require("path");
 const multer = require("multer");
 
 const upload = multer({ dest: "uploads/" });
-
-router.post(
-    "/repository",
-    authenticate,
-    upload.single("zipfile"),
-    (req, res) => {
-        try {
-            const request = new postRepoModel(req.body);
-            request.validate();
-
-            repositoryController.CreateRepository(
-                req.body.name,
-                req.body.description,
-                req.user.id,
-                req.file,
-                (err, repositoryId) => {
-                    if (err)
-                        return res.status(500).json({ error: err.message });
-                    res.json({
-                        message: "Repository created successfully",
-                        repositoryId,
-                    });
-                }
-            );
-        } catch (err) {
-            return res.status(400).json({ error: err.message });
-        }
-    }
-);
-
-router.get("/repository", authenticate, (req, res) => {
+router.post("/repository", authenticate, upload.single("zipfile"), async (req, res) => {
     try {
-        repositoryController.GetRepositoryByUserId(
+        const request = new postRepoModel(req.body);
+        request.validate();
+
+        const { message, repositoryId } = await repositoryController.CreateRepository(
+            req.body.name,
+            req.body.description,
             req.user.id,
-            (err, repository) => {
-                if (err) return res.status(500).json({ error: err.message });
-                res.json(repository);
-            }
+            req.file
         );
+
+        res.json({ message, repositoryId });
     } catch (err) {
-        return res.status(400).json({ error: err.message });
+        res.status(err.status || 500).json({ error: err.message });
     }
 });
 
-router.delete("/repository/:id", authenticate, (req, res) => {
+router.get("/repository", authenticate, async (req, res) => {
     try {
-        const repoID = req.params.id;
-
-        repositoryController.DeleteRepository(repoID, req.user.id, (err) => {
-            if (err) return res.status(500).json({ error: err.message });
-            res.json({ message: "Repository deleted successfully" });
-        });
+        const repositories = await repositoryController.GetRepositoryByUserId(req.user.id);
+        res.json(repositories);
     } catch (err) {
-        return res.status(400).json({ error: err.message });
+        res.status(err.status || 500).json({ error: err.message });
     }
 });
+
+router.delete("/repository/:id", authenticate, async (req, res) => {
+    try {
+        await repositoryController.DeleteRepository(req.params.id, req.user.id);
+        res.json({ message: "Repository deleted successfully" });
+    } catch (err) {
+        res.status(err.status || 500).json({ error: err.message });
+    }
+});
+
 
 module.exports = router;

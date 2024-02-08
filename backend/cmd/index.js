@@ -2,7 +2,6 @@ const express = require("express");
 const authRouter = require("../internal/routes/authRouter");
 const repositoryRouter = require("../internal/routes/repoRouter");
 const userRepoRouter = require("../internal/routes/userRepoRouter");
-const authenticate = require("../internal/middleware/authenticate");
 const errorHandler = require("../internal/middleware/errorHandler");
 const logRequest = require("../internal/middleware/log_request");
 const path = require("path");
@@ -22,6 +21,7 @@ app.get("*", (req, res) => {
         path.join(__dirname, "..", "..", "frontend", "build", "index.html")
     );
 });
+
 
 app.listen(port, "0.0.0.0", () => {
     console.log(`Server running at http://localhost:${port}`);

@@ -1,16 +1,11 @@
-const fs = require("fs");
+const fs = require("fs").promises; // fs의 Promise API를 사용합니다.
 
-/**
- * 주어진 경로의 파일을 삭제합니다.
- * @param {string} filePath - 삭제할 파일의 경로
- * @param {Function} callback - 파일 삭제 완료 또는 에러 시 호출될 콜백 함수
- */
-exports.deleteTempFile = function (filePath, callback) {
-    fs.unlink(filePath, (err) => {
-        if (err) {
-            console.error("Failed to delete file:", err);
-            return callback(err);
-        }
-        callback(null);
-    });
+exports.deleteTempFile = async function (filePath) {
+    try {
+        await fs.unlink(filePath); // 파일을 비동기적으로 삭제합니다.
+        console.log("File deleted successfully");
+    } catch (err) {
+        console.error("Failed to delete file:", err);
+        throw err; // 에러를 호출한 쪽으로 전파합니다.
+    }
 };
