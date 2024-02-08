@@ -41,9 +41,9 @@ class User {
     }
 
     // 사용자 추가
-    createUser(email, username, password) {
+    createUser(email, username, password,role) {
         return new Promise((resolve, reject) => {
-            this.db.run("INSERT INTO users (username, password, email) VALUES (?, ?, ?)", [username, password, email], function(err) {
+            this.db.run("INSERT INTO users (username, password, email,role) VALUES (?, ?, ?,?)", [username, password, email,role], function(err) {
                 if (err) {
                     reject(err);
                 } else {

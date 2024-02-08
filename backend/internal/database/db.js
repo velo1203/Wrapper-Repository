@@ -5,7 +5,7 @@ const db = new sqlite3.Database("internal/database/database.db"); // 데이터�
 db.serialize(() => {
     // 사용자 테이블 생성
     db.run(
-        "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT UNIQUE,username TEXT, password TEXT)"
+        "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT UNIQUE,username TEXT, password TEXT,role TEXT)"
     );
 
     db.run(`

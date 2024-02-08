@@ -3,6 +3,7 @@ require("dotenv").config({ path: ".env" }); // .env 파일에서 환경변수 �
 const authRouter = require("../internal/routes/authRouter");
 const repositoryRouter = require("../internal/routes/repoRouter");
 const userRepoRouter = require("../internal/routes/userRepoRouter");
+const adminRouter = require("../internal/routes/adminRoutes");
 const errorHandler = require("../internal/middleware/errorHandler");
 const logRequest = require("../internal/middleware/log_request");
 const path = require("path");
@@ -14,6 +15,7 @@ app.use(logRequest); // 로그 미들웨어 등록
 app.use(errorHandler); // 에러 핸들러 미들웨어 등록
 app.use("/api/", authRouter); // 인증 라우터 등록
 app.use("/api/", repositoryRouter);
+app.use("/api/admin",adminRouter)
 app.use(userRepoRouter);
 
 app.use(express.static(path.join(__dirname, "..", "..", "frontend", "build")));

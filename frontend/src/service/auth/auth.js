@@ -33,4 +33,15 @@ const register = async (email, password, userName) => {
     }
 };
 
-export { login, register };
+const authenticateAdmin = async () => {
+    try {
+        const apiClient = getApiClient();
+        const response = await apiClient.get("api/admin/check");
+        return response.data;
+    } catch (error) {
+        console.error("GET Request Error:", error);
+        throw error;
+    }
+}
+
+export { login, register,authenticateAdmin };
