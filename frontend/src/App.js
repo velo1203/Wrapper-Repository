@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound/404";
 import AdminDashBoard from "./pages/Admin/AdminDashBoard/AdminDashBoard";
 import Admin from "./pages/Admin/Admin";
 import Course from "./pages/Course/Course";
+import AdminCourse from "./pages/Admin/AdminDashBoard/AdminCourse";
 
 function App() {
     return (
@@ -30,6 +31,7 @@ function App() {
                 </Route>
                 <Route path="/admin" element={<Admin />}>
                     <Route path="" element={<AdminDashBoard />} />
+                    <Route path="course" element={<AdminCourse />} />
                 </Route>
             </Routes>
         </div>
