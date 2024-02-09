@@ -24,7 +24,7 @@ function Header() {
         const checkAdmin = async () => {
             try {
                 const response = await authenticateAdmin(); // 관리자 인증
-                console.log(response)
+                console.log(response);
                 setIsAdmin(response.admin); // 관리자 여부 상태 업데이트
             } catch (error) {
                 console.error("관리자 인증 실패:", error);
@@ -33,14 +33,14 @@ function Header() {
         };
 
         checkAdmin();
-    }, [username]); // username이 변경될 때마다 실행 
+    }, [username]); // username이 변경될 때마다 실행
 
     return (
         <StyledHeader>
             <StyledHeaderContainer>
                 <StyledHeaderTitle onClick={() => navigate("/")}>
                     <h1>Wrapper</h1>
-                    <p>Repository</p>
+                    <p>Course</p>
                 </StyledHeaderTitle>
                 <StyledHeaderOptions>
                     {username !== null ? (
@@ -52,15 +52,23 @@ function Header() {
                             >
                                 {username}
                             </StyledOption>
+                            <StyledOption
+                                onClick={() => {
+                                    navigate("/course");
+                                }}
+                            >
+                                Course
+                            </StyledOption>
                             {isAdmin ? (
-                        <StyledOption
-                            onClick={() => {
-                                navigate("/admin");
-                            }}
-                        >
-                            Admin
-                        </StyledOption>
-                    ) : null}
+                                <Button
+                                    type="outlined"
+                                    onClick={() => {
+                                        navigate("/admin");
+                                    }}
+                                >
+                                    Admin
+                                </Button>
+                            ) : null}
                             <Button
                                 onClick={() => {
                                     handleLogout();

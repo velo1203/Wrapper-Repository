@@ -9,6 +9,7 @@ import Createrepo from "./pages/CreateRepo/CreateRepo";
 import NotFound from "./pages/NotFound/404";
 import AdminDashBoard from "./pages/Admin/AdminDashBoard/AdminDashBoard";
 import Admin from "./pages/Admin/Admin";
+import Course from "./pages/Course/Course";
 
 function App() {
     return (
@@ -24,8 +25,10 @@ function App() {
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-
-                <Route path="/admin" element={<Admin/>}>
+                <Route path="/course">
+                    <Route path="" element={<Course />} />
+                </Route>
+                <Route path="/admin" element={<Admin />}>
                     <Route path="" element={<AdminDashBoard />} />
                 </Route>
             </Routes>
