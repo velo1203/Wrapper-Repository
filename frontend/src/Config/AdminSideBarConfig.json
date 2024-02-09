@@ -1,0 +1,17 @@
+[
+    {
+        "label": "general",
+        "items": [
+            {
+                "label": "Admin",
+                "icon": "faTable",
+                "route": "/admin"
+            },
+            {
+                "label": "Course",
+                "icon": "faLaptopFile",
+                "route": "/admin/course"
+            }
+        ]
+    }
+]
