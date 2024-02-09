@@ -7,17 +7,18 @@ const path = require("path");
 const multer = require("multer");
 
 const upload = multer({ dest: "uploads/" });
-router.post("/repository", authenticate, upload.single("zipfile"), async (req, res) => {
+router.post("/", authenticate, upload.single("zipfile"), async (req, res) => {
     try {
         const request = new postRepoModel(req.body);
         request.validate();
 
-        const { message, repositoryId } = await repositoryController.CreateRepository(
-            req.body.name,
-            req.body.description,
-            req.user.id,
-            req.file
-        );
+        const { message, repositoryId } =
+            await repositoryController.CreateRepository(
+                req.body.name,
+                req.body.description,
+                req.user.id,
+                req.file
+            );
 
         res.json({ message, repositoryId });
     } catch (err) {
@@ -25,16 +26,18 @@ router.post("/repository", authenticate, upload.single("zipfile"), async (req, r
     }
 });
 
-router.get("/repository", authenticate, async (req, res) => {
+router.get("/", authenticate, async (req, res) => {
     try {
-        const repositories = await repositoryController.GetRepositoryByUserId(req.user.id);
+        const repositories = await repositoryController.GetRepositoryByUserId(
+            req.user.id
+        );
         res.json(repositories);
     } catch (err) {
         res.status(err.status || 500).json({ error: err.message });
     }
 });
 
-router.delete("/repository/:id", authenticate, async (req, res) => {
+router.delete("/:id", authenticate, async (req, res) => {
     try {
         await repositoryController.DeleteRepository(req.params.id, req.user.id);
         res.json({ message: "Repository deleted successfully" });
@@ -42,6 +45,5 @@ router.delete("/repository/:id", authenticate, async (req, res) => {
         res.status(err.status || 500).json({ error: err.message });
     }
 });
-
 
 module.exports = router;

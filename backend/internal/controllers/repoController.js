@@ -22,15 +22,21 @@ exports.CreateRepository = async (name, description, userId, zipfile) => {
             throw new Error("User not found");
         }
 
-        const repoPath = path.join(process.cwd(), "cmd", "repository", userFound.username, name);
+        const repoPath = path.join(
+            process.cwd(),
+            "cmd",
+            "repository",
+            userFound.username,
+            name
+        );
         await extractZipContents(zipfile.path, repoPath);
 
-        const repositoryId = await repository.createRepository(name, description, userId);
+        const repositoryId = await repository.create(name, description, userId);
         await deleteTempFile(zipfile.path);
 
         return {
             message: "Repository created successfully",
-            repositoryId
+            repositoryId,
         };
     } catch (err) {
         throw err; // 오류를 호출한 쪽으로 전파
@@ -54,10 +60,16 @@ exports.DeleteRepository = async (repositoryId, userID) => {
         if (!repo) throw new Error("Repository not found");
         if (repo.user_id !== userID) throw new Error("Unauthorized");
 
-        await repository.deleteRepository(repositoryId, userID);
+        await repository.delete(repositoryId, userID);
 
         const userFound = await user.findByUserId(userID);
-        const repoPath = path.join(process.cwd(), "cmd", "repository", userFound.username, repo.name);
+        const repoPath = path.join(
+            process.cwd(),
+            "cmd",
+            "repository",
+            userFound.username,
+            repo.name
+        );
         await fs.promises.rm(repoPath, { recursive: true });
     } catch (error) {
         throw error; // 오류를 호출한 쪽으로 전파

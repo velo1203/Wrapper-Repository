@@ -3,7 +3,7 @@ class Repository {
         this.db = db;
     }
 
-    createRepository(name, description, userId) {
+    create(name, description, userId) {
         return new Promise((resolve, reject) => {
             this.db.run(
                 "INSERT INTO repository (name, description, user_id) VALUES (?, ?, ?)",
@@ -19,7 +19,7 @@ class Repository {
         });
     }
 
-    deleteRepository(id, userId) {
+    delete(id, userId) {
         return new Promise((resolve, reject) => {
             this.db.run(
                 "DELETE FROM repository WHERE id = ? AND user_id = ?",
@@ -98,7 +98,6 @@ class Repository {
             );
         });
     }
-    
 }
 
 module.exports = Repository;

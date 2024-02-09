@@ -42,6 +42,6 @@ const authenticateAdmin = async () => {
         console.error("GET Request Error:", error);
         throw error;
     }
-}
+};
 
-export { login, register,authenticateAdmin };
+export { login, register, authenticateAdmin };

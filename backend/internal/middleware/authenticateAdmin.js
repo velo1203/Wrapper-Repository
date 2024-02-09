@@ -2,7 +2,12 @@ require("dotenv").config({ path: "cmd/.env" }); // .env 파일에서 환경변�
 const jwt = require("jsonwebtoken");
 const secretKey = process.env.JWT_SECRET; // JWT 토큰 생성 시 사용할 시크릿 키
 
-// JWT 토큰을 검증하고 어드민 권한을 확인하는 미들웨어 함수
+/**
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ */
 const authenticateAdmin = (req, res, next) => {
     // 요청 헤더에서 'Authorization' 값 가져오기
     const authHeader = req.headers["authorization"];
@@ -22,8 +27,10 @@ const authenticateAdmin = (req, res, next) => {
         }
 
         // 토큰은 유효하지만, decoded된 페이로드 내의 role이 'admin'이 아닌 경우, 403 Forbidden 응답
-        if (decoded.role !== 'admin') {
-            return res.status(403).json({ message: "Access denied. Admin role required." });
+        if (decoded.role !== "admin") {
+            return res
+                .status(403)
+                .json({ message: "Access denied. Admin role required." });
         }
 
         // 토큰이 유효하고, 사용자가 어드민인 경우, decoded 정보를 req.user에 할당하고 다음 미들웨어로 이동
