@@ -10,6 +10,7 @@ db.serialize(() => {
     db.run(
         `CREATE TABLE IF NOT EXISTS Courses (
             CourseID INTEGER PRIMARY KEY AUTOINCREMENT,
+            ImagePath TEXT,
             Title TEXT NOT NULL,
             Description TEXT NOT NULL
         )`

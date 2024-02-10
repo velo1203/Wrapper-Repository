@@ -8,8 +8,11 @@ const adminRouter = require("../internal/routes/adminRoutes");
 const errorHandler = require("../internal/middleware/errorHandler");
 const logRequest = require("../internal/middleware/log_request");
 const path = require("path");
+const AdminInitial = require("../internal/Bootstrap/setAdmin");
 const app = express();
 const port = process.env.SERVER_PORT;
+
+AdminInitial();
 
 app.use(express.json()); // JSON 요청 본문 파싱을 위한 미들웨어
 app.use(logRequest); // 로그 미들웨어 등록

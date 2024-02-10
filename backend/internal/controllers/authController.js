@@ -15,14 +15,10 @@ exports.register = async (email, username, password) => {
         if (existingUser) {
             throw new Error("User already exists");
         }
-        let role = "user";
-        const superAdminEmails = (process.env.SUPER_ADMIN_EMAILS || "").split(',');
+        const role = "user";
 
-        if (superAdminEmails.includes(email)){ // 슈퍼 어드민 계정 생성
-            role = "admin";
-        }
         const hash = await bcrypt.hash(password, 10);
-        await user.createUser(email, username, hash,role);
+        await user.createUser(email, username, hash, role);
 
         return { message: "User registered successfully" };
     } catch (err) {
@@ -44,12 +40,12 @@ exports.login = async (email, password) => {
         }
 
         const token = jwt.sign(
-            { id: userFound.id, email: userFound.email ,role:userFound.role},
+            { id: userFound.id, email: userFound.email, role: userFound.role },
             secretKey,
             { expiresIn: "1d" }
         );
 
-        return { token, username: userFound.username,role:userFound.role };
+        return { token, username: userFound.username, role: userFound.role };
     } catch (err) {
         throw err;
     }

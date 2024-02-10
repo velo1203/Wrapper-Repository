@@ -3,9 +3,13 @@ const db = require("../database/db");
 const course = new Course(db);
 
 // 코스 생성
-exports.createCourse = async (title, description) => {
+exports.createCourse = async (title, description, imagePath) => {
     try {
-        const courseId = await course.createCourse(title, description);
+        const courseId = await course.createCourse(
+            title,
+            description,
+            imagePath
+        );
         return { courseId };
     } catch (err) {
         throw err;

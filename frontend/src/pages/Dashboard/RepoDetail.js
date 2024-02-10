@@ -7,11 +7,11 @@ import {
 } from "../../style/layout/StyledRepoDetail";
 import { Button } from "../../components/Button/Button";
 import PopupWrapper from "../../components/PopupWrapper/PopupWrapper";
+import { deleteRepo } from "../../service/auth/repo";
 import {
     StyledDeletePopup,
-    StyledDeletePopupOptions,
-} from "../../style/layout/StyledDashboard";
-import { deleteRepo } from "../../service/auth/repo";
+    StyledDeletePopupFooter,
+} from "../../style/layout/StyledDeletePopup";
 
 function RepoDetail({ repo, username, handleDeleteSuccess }) {
     const [deletePopup, setDeletePopup] = React.useState(false);
@@ -67,7 +67,7 @@ function RepoDetail({ repo, username, handleDeleteSuccess }) {
                         <h1>Delete Repository</h1>
                         <hr></hr>
                         <p>Are you sure you want to delete this repository?</p>
-                        <StyledRepoDetailFooter>
+                        <StyledDeletePopupFooter>
                             <Button
                                 type="outlined"
                                 onClick={() => {
@@ -77,7 +77,7 @@ function RepoDetail({ repo, username, handleDeleteSuccess }) {
                                 Cancel
                             </Button>
                             <Button onClick={handleDelete}>Delete</Button>
-                        </StyledRepoDetailFooter>
+                        </StyledDeletePopupFooter>
                     </StyledDeletePopup>
                 </PopupWrapper>
             )}

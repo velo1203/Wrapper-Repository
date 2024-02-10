@@ -10,7 +10,6 @@ function Admin() {
         const checkAdmin = async () => {
             try {
                 const response = await authenticateAdmin();
-                console.log(response);
             } catch (error) {
                 navigate("/");
             }

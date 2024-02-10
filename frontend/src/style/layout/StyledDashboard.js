@@ -51,15 +51,3 @@ export const TableCell = styled.td`
         opacity: 0.8;
     }
 `;
-
-export const StyledDeletePopup = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    h1 {
-        font-size: 30px;
-    }
-    p {
-        font-size: 20px;
-    }
-`;

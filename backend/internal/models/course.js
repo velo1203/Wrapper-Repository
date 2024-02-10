@@ -3,11 +3,11 @@ class Course {
         this.db = db;
     }
 
-    createCourse(title, description) {
+    createCourse(title, description, courseImagePath) {
         return new Promise((resolve, reject) => {
             this.db.run(
-                "INSERT INTO Courses (Title, Description) VALUES (?, ?)",
-                [title, description],
+                "INSERT INTO Courses (Title, Description,ImagePath) VALUES (?, ?,?)",
+                [title, description, courseImagePath],
                 function (err) {
                     if (err) {
                         reject(err);

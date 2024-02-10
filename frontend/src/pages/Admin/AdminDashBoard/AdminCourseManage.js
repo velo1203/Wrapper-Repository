@@ -6,6 +6,8 @@ import {
     StyledPreviewCourse,
     StyledPreviewCourseContent,
     StyledCourseControlSection,
+    StyledContributorHeader,
+    StyledControlFooter,
 } from "../../../style/layout/Admin/StyledAdminCourseManage";
 import sampleImg from "../../../asset/react.png";
 import { Input } from "../../../components/Input/Input";
@@ -40,11 +42,15 @@ function AdminCourseManage() {
                     </StyledControlSection>
                 </StyledCourseManageControl>
             </StyledCourseControlSection>
+            <StyledControlFooter>
+                <Button type="outlined">Delete</Button>
+                <Button>Save</Button>
+            </StyledControlFooter>
             <StyledCourseControlSection>
                 <h1>Contributor Management</h1>
             </StyledCourseControlSection>
             <StyledCourseControlSection>
-                <h1>Contributor Management</h1>
+                <h1>Chapter Manage</h1>
             </StyledCourseControlSection>
         </StyledCourseManage>
     );

@@ -27,7 +27,13 @@ function AdminCourse() {
                 <h1>Course Management</h1>
                 <StyledCourseControl>
                     <Input type="text" placeholder="Search" />
-                    <Button>Create</Button>
+                    <Button
+                        onClick={() => {
+                            navigate("create");
+                        }}
+                    >
+                        Create
+                    </Button>
                 </StyledCourseControl>
             </StyledCourseHeader>
             <StyledCourseContainer>
