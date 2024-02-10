@@ -11,6 +11,7 @@ import AdminDashBoard from "./pages/Admin/AdminDashBoard/AdminDashBoard";
 import Admin from "./pages/Admin/Admin";
 import Course from "./pages/Course/Course";
 import AdminCourse from "./pages/Admin/AdminDashBoard/AdminCourse";
+import AdminCourseManage from "./pages/Admin/AdminDashBoard/AdminCourseManage";
 
 function App() {
     return (
@@ -32,6 +33,10 @@ function App() {
                 <Route path="/admin" element={<Admin />}>
                     <Route path="" element={<AdminDashBoard />} />
                     <Route path="course" element={<AdminCourse />} />
+                    <Route
+                        path="course/manage"
+                        element={<AdminCourseManage />}
+                    />
                 </Route>
             </Routes>
         </div>
