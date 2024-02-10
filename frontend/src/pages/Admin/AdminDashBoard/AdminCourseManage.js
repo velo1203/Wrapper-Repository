@@ -13,14 +13,23 @@ import sampleImg from "../../../asset/react.png";
 import { Input } from "../../../components/Input/Input";
 import { Button } from "../../../components/Button/Button";
 import DragAndDropUpload from "../../../components/DragAndDropUpload/DragAndDropUpload";
-import { getCourse, updateCourse } from "../../../service/auth/course";
+import {
+    deleteCourse,
+    getCourse,
+    updateCourse,
+} from "../../../service/auth/course";
 import { useNavigate, useParams } from "react-router-dom";
+import PopupWrapper from "../../../components/PopupWrapper/PopupWrapper";
+import { StyledDeletePopup } from "../../../style/layout/StyledDeletePopup";
+import AdminChapterManage from "./AdminChapterMange";
 function AdminCourseManage() {
     const [course, setCourse] = useState(null);
+    const [deletePopup, setDeletePopup] = useState(false);
     const [title, setTitle] = useState("New Course");
     const [description, setDescription] = useState("Course Description");
     const [courseImage, setCourseImage] = useState(null); // 이미지 파일 상태 추가
     const [imagePreviewUrl, setImagePreviewUrl] = useState(sampleImg); // 이미지 미리보기 URL 상태 추가
+
     const navigate = useNavigate();
     let { id } = useParams();
 
@@ -44,23 +53,40 @@ function AdminCourseManage() {
         };
         getCourses();
     }, [id, navigate]);
-
+    const handleDelete = async () => {
+        try {
+            await deleteCourse(course.CourseID);
+            alert("Course Deleted");
+            navigate("/admin/course");
+        } catch (e) {
+            console.error(e);
+        }
+    };
     const handleFileUpload = (files) => {
         const file = files[0];
         if (file) {
-            setCourseImage(file);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImagePreviewUrl(reader.result);
-            };
-            reader.readAsDataURL(file);
+            // 이미지 파일인지 확인
+            if (file.type.startsWith("image/")) {
+                setCourseImage(file);
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setImagePreviewUrl(reader.result); // 이미지 미리보기 URL 설정
+                };
+                reader.readAsDataURL(file); // 파일을 Data URL로 읽어서 미리보기 생성
+            } else {
+                alert("Please upload an image file."); // 이미지 파일이 아닌 경우 경고
+            }
         }
     };
 
     const handleSave = async () => {
         console.log("Save Course", title, description, courseImage);
-        await updateCourse(id, title, description, courseImage); // 이미지 파일 추가
-        alert("Course Updated");
+        try {
+            await updateCourse(id, title, description, courseImage); // 이미지 파일 추가
+            alert("Course Updated");
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     return (
@@ -106,15 +132,46 @@ function AdminCourseManage() {
                 </StyledCourseManageControl>
             </StyledCourseControlSection>
             <StyledControlFooter>
-                <Button type="outlined">Delete</Button>
+                <Button
+                    type="outlined"
+                    onClick={() => {
+                        setDeletePopup(true);
+                    }}
+                >
+                    Delete
+                </Button>
                 <Button onClick={handleSave}>Save</Button>
             </StyledControlFooter>
             <StyledCourseControlSection>
                 <h1>Contributor Management</h1>
             </StyledCourseControlSection>
             <StyledCourseControlSection>
-                <h1>Chapter Manage</h1>
+                <AdminChapterManage />
             </StyledCourseControlSection>
+            {deletePopup && (
+                <PopupWrapper
+                    onClose={() => {
+                        setDeletePopup(false);
+                    }}
+                >
+                    <StyledDeletePopup>
+                        <h1>Delete Course</h1>
+                        <hr></hr>
+                        <p>Are you sure you want to delete this Coures?</p>
+                        <StyledControlFooter>
+                            <Button
+                                type="outlined"
+                                onClick={() => {
+                                    setDeletePopup(false);
+                                }}
+                            >
+                                Cancel
+                            </Button>
+                            <Button onClick={handleDelete}>Delete</Button>
+                        </StyledControlFooter>
+                    </StyledDeletePopup>
+                </PopupWrapper>
+            )}
         </StyledCourseManage>
     );
 }

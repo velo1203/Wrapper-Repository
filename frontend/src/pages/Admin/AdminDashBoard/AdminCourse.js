@@ -49,7 +49,7 @@ function AdminCourse() {
                 </StyledCourseControl>
             </StyledCourseHeader>
             <StyledCourseContainer>
-                {courses.length > 0 &&
+                {courses.length > 0 ? (
                     courses.map((course, index) => {
                         console.log(
                             `http://localhost:5000/${course.ImagePath}`
@@ -80,7 +80,10 @@ function AdminCourse() {
                                 </StyledCourseContents>
                             </StyledCourse>
                         );
-                    })}
+                    })
+                ) : (
+                    <h1>No Course</h1>
+                )}
             </StyledCourseContainer>
         </StyledAdminCourse>
     );

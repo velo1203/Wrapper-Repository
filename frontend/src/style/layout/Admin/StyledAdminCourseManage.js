@@ -43,8 +43,7 @@ export const StyledPreviewCourseContent = styled.div`
 export const StyledCourseManageControl = styled.div`
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* 추가된 속성 */
-    width: 1000px; /* 추가된 속성 */
+    flex-grow: 1;
 `;
 
 export const StyledCourseControlSection = styled.div`

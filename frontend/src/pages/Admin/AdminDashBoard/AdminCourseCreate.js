@@ -32,7 +32,20 @@ function AdminCourseCreate() {
         }
     }, [courseImage]);
     const handleFileUpload = (files) => {
-        setcourseImage(files[0]);
+        const file = files[0];
+        if (file) {
+            // 이미지 파일인지 확인
+            if (file.type.startsWith("image/")) {
+                setcourseImage(file);
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    setImagePreviewUrl(reader.result); // 이미지 미리보기 URL 설정
+                };
+                reader.readAsDataURL(file); // 파일을 Data URL로 읽어서 미리보기 생성
+            } else {
+                alert("Please upload an image file."); // 이미지 파일이 아닌 경우 경고
+            }
+        }
     };
 
     const handleSubmit = () => {

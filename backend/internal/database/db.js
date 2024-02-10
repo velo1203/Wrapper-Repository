@@ -20,7 +20,8 @@ db.serialize(() => {
         ChapterID INTEGER PRIMARY KEY AUTOINCREMENT,
         CourseID INTEGER NOT NULL,
         Title TEXT NOT NULL,
-        Description TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (CourseID) REFERENCES Courses(CourseID) ON DELETE CASCADE
     )`);
     db.run(`

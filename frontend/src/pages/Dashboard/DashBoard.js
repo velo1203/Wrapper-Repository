@@ -3,9 +3,6 @@ import { StyledDefaultPage } from "../../style/layout/StyledDefaultPage";
 import {
     StyledDashBoardHeader,
     StyledDashBoardHeaderOptions,
-    StyledDashboardTable,
-    TableCell,
-    TableHeaderCell,
 } from "../../style/layout/StyledDashboard";
 import { Button } from "../../components/Button/Button";
 import { Input } from "../../components/Input/Input";
@@ -16,6 +13,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import useApiErrorHandler from "../../utils/Hooks/ErrorHandler";
 import RepoDetail from "./RepoDetail";
+import {
+    StyledTable,
+    TableCell,
+    TableHeaderCell,
+} from "../../components/Table/Table";
 function DashBoard() {
     const chevronDown = <FontAwesomeIcon icon={faChevronDown} />;
     const username = useAuthStore((state) => state.username);
@@ -75,7 +77,7 @@ function DashBoard() {
                     </Button>
                 </StyledDashBoardHeaderOptions>
             </StyledDashBoardHeader>
-            <StyledDashboardTable>
+            <StyledTable>
                 <thead>
                     <tr>
                         <TableHeaderCell style={{ width: "20%" }}>
@@ -144,7 +146,7 @@ function DashBoard() {
                         </tr>
                     )}
                 </tbody>
-            </StyledDashboardTable>
+            </StyledTable>
         </StyledDefaultPage>
     );
 }
