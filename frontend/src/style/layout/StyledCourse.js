@@ -4,7 +4,8 @@ export const StyledCourse = styled.div`
     border: 1px solid var(--Border);
     transition: all 0.1s ease-in-out;
     img {
-        width: 100%;
+        height: 250px;
+        width: 400px;
         object-fit: cover;
     }
 
@@ -14,11 +15,13 @@ export const StyledCourse = styled.div`
     }
 `;
 
-export const StyledCourseContainer = styled.div``;
+export const StyledCourseContents = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
 
 export const StyledCourseContributors = styled.div`
-    border-top: 1px solid var(--Border);
-    padding-top: 10px;
+    padding: 20px;
     h1 {
         font-size: 17px;
     }
@@ -35,10 +38,15 @@ export const StyledCProfileIcon = styled.div`
     width: 25px; /* 너비 추가 */
     border-radius: 50%; /* 모서리를 완전히 둥글게 */
     overflow: hidden; /* 너비를 넘어가는 이미지를 숨김 */
+    img {
+        height: 100%;
+        width: 100%; /* 너비 추가 */
+        object-fit: cover; /* 이미지를 늘리지 않고, 자르기 */
+    }
 `;
 
 export const StyledCourseContent = styled.div`
-    padding-top: 10px;
+    padding: 10px;
     h1 {
         font-size: 24px;
     }

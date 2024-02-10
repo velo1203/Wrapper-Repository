@@ -24,7 +24,6 @@ function Header() {
         const checkAdmin = async () => {
             try {
                 const response = await authenticateAdmin(); // 관리자 인증
-                console.log(response);
                 setIsAdmin(response.admin); // 관리자 여부 상태 업데이트
             } catch (error) {
                 console.error("관리자 인증 실패:", error);

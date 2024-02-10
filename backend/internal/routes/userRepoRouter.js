@@ -4,9 +4,9 @@ const path = require("path");
 const { incrementVisits } = require("../controllers/userRepoController");
 
 const repositoryBasePath = path.join(process.cwd(), "cmd", "repository");
-router.use("/:username/:projectname", async (req, res, next) => {
+router.use("repository/:username/:projectname", async (req, res, next) => {
     const { username, projectname } = req.params;
-    if (req.path === '/'){
+    if (req.path === "/") {
         try {
             // 조회수 증가
             await incrementVisits(username, projectname);

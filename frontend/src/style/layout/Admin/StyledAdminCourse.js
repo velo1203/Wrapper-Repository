@@ -33,10 +33,6 @@ export const StyledCourseControl = styled.div`
 
 export const StyledCourseContainer = styled.div`
     padding: 20px;
-    display: grid;
+    display: flex;
     gap: 20px;
-    grid-template-columns: repeat(
-        auto-fill,
-        minmax(300px, 1fr)
-    ); // 그리드 아이템이 최소 250px, 최대 1fr의 너비를 가지도록 설정
 `;

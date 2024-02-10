@@ -22,6 +22,7 @@ app.use("/api/repository", repositoryRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/course", courseRouter);
 app.use(userRepoRouter);
+app.use("/uploads", express.static("public/uploads"));
 
 app.use(express.static(path.join(__dirname, "..", "..", "frontend", "build")));
 app.get("*", (req, res) => {
