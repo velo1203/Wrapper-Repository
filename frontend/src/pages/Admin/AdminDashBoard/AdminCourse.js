@@ -57,7 +57,7 @@ function AdminCourse() {
                         return (
                             <StyledCourse
                                 onClick={() => {
-                                    navigate("manage");
+                                    navigate(`manage/${course.CourseID}`);
                                 }}
                                 key={index}
                             >

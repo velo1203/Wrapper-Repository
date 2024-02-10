@@ -35,7 +35,7 @@ function App() {
                     <Route path="" element={<AdminDashBoard />} />
                     <Route path="course" element={<AdminCourse />} />
                     <Route
-                        path="course/manage"
+                        path="course/manage/:id"
                         element={<AdminCourseManage />}
                     />
                     <Route

@@ -34,6 +34,29 @@ router.post(
     }
 );
 
+// 코스 수정을 위한 PUT 엔드포인트
+router.put(
+    "/:id",
+    authenticateAdmin,
+    upload.single("image"),
+    async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { title, description } = req.body;
+            const image = req.file; // multer를 통해 업로드된 이미지 파일 정보
+            const result = await courseController.updateCourse(
+                id,
+                title,
+                description,
+                image ? image.path : null
+            );
+            res.json({ message: result.message });
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    }
+);
+
 // 코스 삭제를 위한 DELETE 엔드포인트
 router.delete("/:id", authenticateAdmin, async (req, res) => {
     try {
@@ -49,6 +72,17 @@ router.get("/", async (req, res) => {
     try {
         const result = await courseController.findAllCourses();
         res.json({ courses: result.courses });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 특정 코스 조회를 위한 GET 엔드포인트
+router.get("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await courseController.findCourseById(id);
+        res.json(result);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

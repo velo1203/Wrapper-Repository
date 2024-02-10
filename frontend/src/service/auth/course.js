@@ -11,6 +11,17 @@ const getCourseList = async () => {
     }
 };
 
+const getCourse = async (courseId) => {
+    try {
+        const apiClient = getApiClient();
+        const response = await apiClient.get(`/api/course/${courseId}`);
+        return response.data;
+    } catch (error) {
+        console.error("GET Request Error:", error);
+        throw error;
+    }
+};
+
 const createCourse = async (title, description, imageFile) => {
     try {
         const formData = new FormData();
@@ -42,4 +53,27 @@ const deleteCourse = async (courseId) => {
     }
 };
 
-export { getCourseList, createCourse, deleteCourse };
+const updateCourse = async (courseId, title, description, imageFile) => {
+    try {
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("image", imageFile); // 'image'는 서버에서 해당 파일을 참조하는 필드의 이름이어야 합니다.
+        const apiClient = getApiClient();
+        const response = await apiClient.put(
+            `/api/course/${courseId}`,
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data", // FormData와 함께 요청할 때는 콘텐츠 타입을 명시적으로 설정해야 합니다.
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error("PUT Request Error with Image:", error);
+        throw error;
+    }
+};
+
+export { getCourseList, createCourse, deleteCourse, getCourse, updateCourse };
