@@ -5,7 +5,6 @@ const router = express.Router();
 router.get("/:courseid", async (req, res) => {
     try {
         const courseid = req.params.courseid;
-        console.log("courseid", courseid);
         const chapter = await chapterController.findAllChapters(courseid);
         res.json(chapter);
     } catch (err) {

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledDeletePopup = styled.div`
+export const StyledPopup = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -12,7 +12,7 @@ export const StyledDeletePopup = styled.div`
     }
 `;
 
-export const StyledDeletePopupFooter = styled.div`
+export const StyledPopupFooter = styled.div`
     display: flex;
     justify-content: flex-end;
     gap: 20px;

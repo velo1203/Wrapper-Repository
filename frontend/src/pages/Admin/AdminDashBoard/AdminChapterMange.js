@@ -17,30 +17,53 @@ import {
 import { Input } from "../../../components/Input/Input";
 import Dropdown from "../../../components/Dropdown/Dropdown";
 import { StyledControlFooter } from "../../../style/layout/Admin/StyledAdminCourseManage";
-import { getChapterList } from "../../../service/auth/chapter";
+import { createChapter, getChapterList } from "../../../service/auth/chapter";
+import PopupWrapper from "../../../components/PopupWrapper/PopupWrapper";
+import {
+    StyledPopup,
+    StyledPopupFooter,
+} from "../../../style/layout/StyledDeletePopup";
 
 function AdminChapterManage({ courseid }) {
     const [chapters, setChapters] = useState([]);
     const [editChapterId, setEditChapterId] = useState(null);
     const [editTitle, setEditTitle] = useState("");
-
+    const [chapterCreate, setChapterCreate] = useState(false);
+    const [newchapterTitle, setnewchapterTitle] = useState("");
+    const [onEvent, setOnEvent] = useState(false);
+    const [detailChapter, setDetailChapter] = useState(null);
+    const [original, setOriginal] = useState(null);
     useEffect(() => {
         const getChapters = async () => {
             try {
                 const chapters = await getChapterList(courseid);
                 setChapters(chapters.chapters);
+                setOriginal(chapters.chapters); // 원본 데이터 저장
             } catch (e) {
                 console.error(e);
             }
         };
         getChapters();
-    }, [courseid]);
+    }, [courseid, onEvent]);
 
-    console.log(chapters);
+    const handleDetailChapter = (id) => {
+        if (detailChapter === id) setDetailChapter(null);
+        else setDetailChapter(id);
+    };
+
+    const handleAddChapter = async () => {
+        try {
+            const new_chapter = await createChapter(courseid, newchapterTitle);
+            setOnEvent(!onEvent); // 이벤트 발생
+            setChapterCreate(false);
+        } catch (e) {
+            console.error(e);
+        }
+    };
 
     // 편집 아이콘 클릭 시 호출되는 함수
     const handleEditClick = (chapter) => {
-        setEditChapterId(chapter.id);
+        setEditChapterId(chapter.ChapterID);
         setEditTitle(chapter.title);
     };
 
@@ -52,7 +75,9 @@ function AdminChapterManage({ courseid }) {
     // 변경사항을 저장하고 편집 모드를 종료하는 함수
     const handleSave = (id) => {
         const updatedChapters = chapters.map((chapter) =>
-            chapter.id === id ? { ...chapter, title: editTitle } : chapter
+            chapter.ChapterID === id
+                ? { ...chapter, Title: editTitle }
+                : chapter
         );
         setChapters(updatedChapters);
         setEditChapterId(null);
@@ -60,30 +85,73 @@ function AdminChapterManage({ courseid }) {
 
     return (
         <StyledAdminChapter>
+            {chapterCreate && (
+                <PopupWrapper
+                    onClose={() => {
+                        setChapterCreate(false);
+                    }}
+                >
+                    <StyledPopup>
+                        <h1>Create Chapter</h1>
+                        <hr />
+                        <p>Write Chapter Title</p>
+                        <Input
+                            type="text"
+                            placeholder="Chapter Title"
+                            onChange={(e) => {
+                                setnewchapterTitle(e.target.value);
+                            }}
+                        />
+                        <StyledPopupFooter>
+                            <Button
+                                type="outlined"
+                                onClick={() => {
+                                    setChapterCreate(false);
+                                }}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    handleAddChapter();
+                                }}
+                            >
+                                Create
+                            </Button>
+                        </StyledPopupFooter>
+                    </StyledPopup>
+                </PopupWrapper>
+            )}
             <StyledChapterHeader>
                 <h1>Chapter Management</h1>
                 <StyledChapterControl>
                     <Input type="text" placeholder="Search" />
-                    <Button>Create</Button>
+                    <Button
+                        onClick={() => {
+                            setChapterCreate(true);
+                        }}
+                    >
+                        Create
+                    </Button>
                 </StyledChapterControl>
             </StyledChapterHeader>
             <StyledTable>
                 <thead>
                     <tr>
-                        <TableHeaderCell width="5%">Order</TableHeaderCell>
+                        <TableHeaderCell width="5%">ID</TableHeaderCell>
                         <TableHeaderCell>Chapter Title</TableHeaderCell>
-                        <TableHeaderCell>Last Updated</TableHeaderCell>
-                        <TableHeaderCell>Lectures</TableHeaderCell>
+                        <TableHeaderCell>Created</TableHeaderCell>
+                        <TableHeaderCell>Updated</TableHeaderCell>
                         <TableHeaderCell></TableHeaderCell>
                     </tr>
                 </thead>
                 <tbody>
                     {chapters.map((chapter) => (
-                        <React.Fragment key={chapter.id}>
+                        <React.Fragment key={chapter.ChapterID}>
                             <tr>
-                                <TableCell>{chapter.id}</TableCell>
+                                <TableCell>{chapter.ChapterID}</TableCell>
                                 <TableCell width="30%">
-                                    {editChapterId === chapter.id ? (
+                                    {editChapterId === chapter.ChapterID ? (
                                         <Input
                                             type="text"
                                             value={editTitle}
@@ -91,7 +159,7 @@ function AdminChapterManage({ courseid }) {
                                         />
                                     ) : (
                                         <StyledChapterTitle>
-                                            <p>{chapter.title}</p>
+                                            <p>{chapter.Title}</p>
                                             <FontAwesomeIcon
                                                 icon={faEdit}
                                                 onClick={() =>
@@ -101,37 +169,49 @@ function AdminChapterManage({ courseid }) {
                                         </StyledChapterTitle>
                                     )}
                                 </TableCell>
-                                <TableCell>{chapter.lastUpdated}</TableCell>
-                                <TableCell>{chapter.lecturesCount}</TableCell>
+                                <TableCell>{chapter.created_at}</TableCell>
+                                <TableCell>{chapter.updated_at}</TableCell>
                                 <TableCell>
-                                    {editChapterId === chapter.id ? (
+                                    {editChapterId === chapter.ChapterID ? (
                                         <Button
                                             onClick={() =>
-                                                handleSave(chapter.id)
+                                                handleSave(chapter.ChapterID)
                                             }
                                         >
                                             Save
                                         </Button>
                                     ) : (
-                                        <FontAwesomeIcon icon={faChevronDown} />
+                                        <FontAwesomeIcon
+                                            style={{ padding: "5px" }}
+                                            icon={faChevronDown}
+                                            onClick={() => {
+                                                handleDetailChapter(
+                                                    chapter.ChapterID
+                                                );
+                                            }}
+                                        />
                                     )}
                                 </TableCell>
                             </tr>
-                            <tr>
-                                <TableCell colSpan="5">
-                                    <StyledChapterSection>
-                                        <p>HTML 시작하기</p>
-                                        <p>ID : 1</p>
-                                        <Dropdown />
-                                    </StyledChapterSection>
-                                    <StyledControlFooter>
-                                        <Button type="outlined">Delete</Button>
-                                        <Button width="120px">
-                                            Add Lecture
-                                        </Button>
-                                    </StyledControlFooter>
-                                </TableCell>
-                            </tr>
+                            {detailChapter === chapter.ChapterID && (
+                                <tr>
+                                    <TableCell colSpan="5">
+                                        <StyledChapterSection>
+                                            <p>HTML 시작하기</p>
+                                            <p>ID : 1</p>
+                                            <Dropdown />
+                                        </StyledChapterSection>
+                                        <StyledControlFooter>
+                                            <Button type="outlined">
+                                                Delete
+                                            </Button>
+                                            <Button width="120px">
+                                                Add Lecture
+                                            </Button>
+                                        </StyledControlFooter>
+                                    </TableCell>
+                                </tr>
+                            )}
                         </React.Fragment>
                     ))}
 
@@ -143,6 +223,18 @@ function AdminChapterManage({ courseid }) {
                         </tr>
                     )}
                 </tbody>
+                {original !== chapters && (
+                    <tfoot>
+                        <tr>
+                            <TableCell colSpan="5">
+                                <StyledControlFooter>
+                                    <Button type="outlined">Cancel</Button>
+                                    <Button>Save</Button>
+                                </StyledControlFooter>
+                            </TableCell>
+                        </tr>
+                    </tfoot>
+                )}
             </StyledTable>
         </StyledAdminChapter>
     );

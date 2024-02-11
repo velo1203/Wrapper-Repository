@@ -14,6 +14,7 @@ const getChapterList = async (courseId) => {
 const createChapter = async (courseId, title) => {
     try {
         const apiClient = getApiClient();
+        console.log(title);
         const response = await apiClient.post(`/api/chapter/${courseId}`, {
             title,
         });

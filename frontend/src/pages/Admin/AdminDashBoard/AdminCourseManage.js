@@ -6,7 +6,6 @@ import {
     StyledPreviewCourse,
     StyledPreviewCourseContent,
     StyledCourseControlSection,
-    StyledContributorHeader,
     StyledControlFooter,
 } from "../../../style/layout/Admin/StyledAdminCourseManage";
 import sampleImg from "../../../asset/react.png";
@@ -20,7 +19,10 @@ import {
 } from "../../../service/auth/course";
 import { useNavigate, useParams } from "react-router-dom";
 import PopupWrapper from "../../../components/PopupWrapper/PopupWrapper";
-import { StyledDeletePopup } from "../../../style/layout/StyledDeletePopup";
+import {
+    StyledDeletePopup,
+    StyledPopup,
+} from "../../../style/layout/StyledDeletePopup";
 import AdminChapterManage from "./AdminChapterMange";
 function AdminCourseManage() {
     const [course, setCourse] = useState(null);
@@ -154,7 +156,7 @@ function AdminCourseManage() {
                         setDeletePopup(false);
                     }}
                 >
-                    <StyledDeletePopup>
+                    <StyledPopup>
                         <h1>Delete Course</h1>
                         <hr></hr>
                         <p>Are you sure you want to delete this Coures?</p>
@@ -169,7 +171,7 @@ function AdminCourseManage() {
                             </Button>
                             <Button onClick={handleDelete}>Delete</Button>
                         </StyledControlFooter>
-                    </StyledDeletePopup>
+                    </StyledPopup>
                 </PopupWrapper>
             )}
         </StyledCourseManage>
