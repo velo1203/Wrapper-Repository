@@ -17,7 +17,11 @@ import {
 import { Input } from "../../../components/Input/Input";
 import Dropdown from "../../../components/Dropdown/Dropdown";
 import { StyledControlFooter } from "../../../style/layout/Admin/StyledAdminCourseManage";
-import { createChapter, getChapterList } from "../../../service/auth/chapter";
+import {
+    createChapter,
+    deleteChapter,
+    getChapterList,
+} from "../../../service/auth/chapter";
 import PopupWrapper from "../../../components/PopupWrapper/PopupWrapper";
 import {
     StyledPopup,
@@ -33,6 +37,7 @@ function AdminChapterManage({ courseid }) {
     const [onEvent, setOnEvent] = useState(false);
     const [detailChapter, setDetailChapter] = useState(null);
     const [original, setOriginal] = useState(null);
+    const [deleteChapterId, setDeleteChapterId] = useState(null); // 상태 관리 변수 이름 변경
     useEffect(() => {
         const getChapters = async () => {
             try {
@@ -56,6 +61,16 @@ function AdminChapterManage({ courseid }) {
             const new_chapter = await createChapter(courseid, newchapterTitle);
             setOnEvent(!onEvent); // 이벤트 발생
             setChapterCreate(false);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    const handleDeleteChapter = async (id) => {
+        try {
+            const deleted = await deleteChapter(id); // API 호출 함수는 그대로 유지
+            setOnEvent(!onEvent); // 이벤트 발생
+            setDeleteChapterId(null); // 상태 설정 함수 이름 변경
         } catch (e) {
             console.error(e);
         }
@@ -117,6 +132,35 @@ function AdminChapterManage({ courseid }) {
                                 }}
                             >
                                 Create
+                            </Button>
+                        </StyledPopupFooter>
+                    </StyledPopup>
+                </PopupWrapper>
+            )}
+            {deleteChapterId && ( // 조건부 렌더링에서 상태 변수 이름 변경
+                <PopupWrapper onClose={() => setDeleteChapterId(null)}>
+                    {" "}
+                    // 상태 설정 함수 이름 변경
+                    <StyledPopup>
+                        <h1>Delete Repository</h1>
+                        <hr></hr>
+                        <p>Are you sure you want to delete this repository?</p>
+                        <StyledPopupFooter>
+                            <Button
+                                type="outlined"
+                                onClick={() => {
+                                    setDeleteChapterId(null); // 상태 설정 함수 이름 변경
+                                }}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    console.log(deleteChapterId); // 상태 변수 이름 변경
+                                    handleDeleteChapter(deleteChapterId); // 함수 호출시 상태 변수 이름 변경
+                                }}
+                            >
+                                Delete
                             </Button>
                         </StyledPopupFooter>
                     </StyledPopup>
@@ -202,7 +246,14 @@ function AdminChapterManage({ courseid }) {
                                             <Dropdown />
                                         </StyledChapterSection>
                                         <StyledControlFooter>
-                                            <Button type="outlined">
+                                            <Button
+                                                type="outlined"
+                                                onClick={() => {
+                                                    setDeleteChapterId(
+                                                        chapter.ChapterID
+                                                    );
+                                                }}
+                                            >
                                                 Delete
                                             </Button>
                                             <Button width="120px">
