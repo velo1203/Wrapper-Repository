@@ -29,5 +29,11 @@ export const StyledChapterTitle = styled.div`
 `;
 
 export const StyledChapterSection = styled.div`
-    padding: 20px;
+    display: flex;
+    margin-bottom: 10px;
+    font-size: 17px;
+    justify-content: space-between;
+    background-color: var(--Input);
+    padding: 10px 20px;
+    align-items: center;
 `;

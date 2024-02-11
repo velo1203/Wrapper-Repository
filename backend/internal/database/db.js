@@ -20,6 +20,7 @@ db.serialize(() => {
         ChapterID INTEGER PRIMARY KEY AUTOINCREMENT,
         CourseID INTEGER NOT NULL,
         Title TEXT NOT NULL,
+        ChapterOrder INTEGER NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (CourseID) REFERENCES Courses(CourseID) ON DELETE CASCADE
@@ -29,6 +30,7 @@ db.serialize(() => {
         LectureID INTEGER PRIMARY KEY AUTOINCREMENT,
         ChapterID INTEGER NOT NULL,
         Title TEXT NOT NULL,
+        LectureOrder INTEGER NOT NULL,
         Content TEXT,
         MarkdownPath TEXT,  
         FOREIGN KEY (ChapterID) REFERENCES Chapters(ChapterID) ON DELETE CASCADE

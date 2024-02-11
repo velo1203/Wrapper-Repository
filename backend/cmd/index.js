@@ -5,6 +5,7 @@ const repositoryRouter = require("../internal/routes/repoRouter");
 const userRepoRouter = require("../internal/routes/userRepoRouter");
 const courseRouter = require("../internal/routes/courseRoutes");
 const adminRouter = require("../internal/routes/adminRoutes");
+const chatperRouter = require("../internal/routes/chapterRoutes");
 const errorHandler = require("../internal/middleware/errorHandler");
 const logRequest = require("../internal/middleware/log_request");
 const path = require("path");
@@ -21,6 +22,7 @@ app.use("/api", authRouter); // 인증 라우터 등록
 app.use("/api/repository", repositoryRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/course", courseRouter);
+app.use("/api/chatper", chatperRouter);
 app.use(userRepoRouter);
 app.use("/uploads", express.static("public/uploads"));
 

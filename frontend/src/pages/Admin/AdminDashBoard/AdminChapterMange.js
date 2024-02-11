@@ -5,7 +5,7 @@ import {
     StyledChapterHeader,
     StyledChapterSection,
     StyledChapterTitle,
-} from "../../../style/layout/Admin/StyledAdminChapterTb";
+} from "../../../style/layout/Admin/StyledAdminChapter";
 import { Button } from "../../../components/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -15,6 +15,8 @@ import {
     TableHeaderCell,
 } from "../../../components/Table/Table";
 import { Input } from "../../../components/Input/Input";
+import Dropdown from "../../../components/Dropdown/Dropdown";
+import { StyledControlFooter } from "../../../style/layout/Admin/StyledAdminCourseManage";
 
 function AdminChapterManage() {
     const [chapters, setChapters] = useState([
@@ -70,41 +72,60 @@ function AdminChapterManage() {
                 </thead>
                 <tbody>
                     {chapters.map((chapter) => (
-                        <tr key={chapter.id}>
-                            <TableCell>{chapter.id}</TableCell>
-                            <TableCell width="30%">
-                                {editChapterId === chapter.id ? (
-                                    <Input
-                                        type="text"
-                                        value={editTitle}
-                                        onChange={handleTitleChange}
-                                    />
-                                ) : (
-                                    <StyledChapterTitle>
-                                        <p>{chapter.title}</p>
-                                        <FontAwesomeIcon
-                                            icon={faEdit}
-                                            onClick={() =>
-                                                handleEditClick(chapter)
-                                            }
+                        <>
+                            <tr key={chapter.id}>
+                                <TableCell>{chapter.id}</TableCell>
+                                <TableCell width="30%">
+                                    {editChapterId === chapter.id ? (
+                                        <Input
+                                            type="text"
+                                            value={editTitle}
+                                            onChange={handleTitleChange}
                                         />
-                                    </StyledChapterTitle>
-                                )}
-                            </TableCell>
-                            <TableCell>{chapter.lastUpdated}</TableCell>
-                            <TableCell>{chapter.lecturesCount}</TableCell>
-                            <TableCell>
-                                {editChapterId === chapter.id ? (
-                                    <Button
-                                        onClick={() => handleSave(chapter.id)}
-                                    >
-                                        Save
-                                    </Button>
-                                ) : (
-                                    <FontAwesomeIcon icon={faChevronDown} />
-                                )}
-                            </TableCell>
-                        </tr>
+                                    ) : (
+                                        <StyledChapterTitle>
+                                            <p>{chapter.title}</p>
+                                            <FontAwesomeIcon
+                                                icon={faEdit}
+                                                onClick={() =>
+                                                    handleEditClick(chapter)
+                                                }
+                                            />
+                                        </StyledChapterTitle>
+                                    )}
+                                </TableCell>
+                                <TableCell>{chapter.lastUpdated}</TableCell>
+                                <TableCell>{chapter.lecturesCount}</TableCell>
+                                <TableCell>
+                                    {editChapterId === chapter.id ? (
+                                        <Button
+                                            onClick={() =>
+                                                handleSave(chapter.id)
+                                            }
+                                        >
+                                            Save
+                                        </Button>
+                                    ) : (
+                                        <FontAwesomeIcon icon={faChevronDown} />
+                                    )}
+                                </TableCell>
+                            </tr>
+                            <tr>
+                                <TableCell colSpan="5">
+                                    <StyledChapterSection>
+                                        <p>HTML 시작하기</p>
+                                        <p>ID : 1</p>
+                                        <Dropdown />
+                                    </StyledChapterSection>
+                                    <StyledControlFooter>
+                                        <Button type="outlined">Delete</Button>
+                                        <Button width="120px">
+                                            Add Lecture
+                                        </Button>
+                                    </StyledControlFooter>
+                                </TableCell>
+                            </tr>
+                        </>
                     ))}
                 </tbody>
             </StyledTable>
