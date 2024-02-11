@@ -2,19 +2,20 @@ const express = require("express");
 const chapterController = require("../controllers/chapterController");
 const router = express.Router();
 
-router.get("/course/:id", async (req, res) => {
+router.get("/:courseid", async (req, res) => {
     try {
-        const id = req.params.id;
-        const chapter = await chapterController.findAllChapters(id);
+        const courseid = req.params.courseid;
+        console.log("courseid", courseid);
+        const chapter = await chapterController.findAllChapters(courseid);
         res.json(chapter);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
-router.post("/", async (req, res) => {
+router.post("/:courseId", async (req, res) => {
     try {
-        const courseId = req.body.courseId;
+        const courseId = req.params.courseId;
         const title = req.body.title;
         const chapter = await chapterController.createChapter(courseId, title);
         res.json(chapter);
@@ -23,7 +24,7 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.put("/", async (req, res) => {
+router.put("/:id", async (req, res) => {
     try {
         const chapters = req.body;
         const chapter = await chapterController.updateChapter(chapters, id);

@@ -146,7 +146,7 @@ function AdminCourseManage() {
                 <h1>Contributor Management</h1>
             </StyledCourseControlSection>
             <StyledCourseControlSection>
-                <AdminChapterManage />
+                {id && <AdminChapterManage courseid={id} />}
             </StyledCourseControlSection>
             {deletePopup && (
                 <PopupWrapper
