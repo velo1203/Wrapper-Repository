@@ -5,7 +5,8 @@ function AdminDashBoard() {
     return (
         <div>
             <h1>돌아오신것을 환영합니다.</h1>
-            <p>대쉬보드</p>
+            <p>대쉬보드 </p>
+            <p>안녕하세요</p>
         </div>
     );
 }
