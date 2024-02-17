@@ -73,7 +73,7 @@ function AdminDashBoard() {
                             <TableCell>
                                 <a
                                     href={`${window.location.origin}/${
-                                        users[repo.user_id]?.name
+                                        users[repo.user_id]?.username
                                     }/${repo.name}`}
                                 >
                                     {window.location.origin}/
