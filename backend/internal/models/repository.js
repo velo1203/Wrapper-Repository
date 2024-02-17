@@ -83,6 +83,18 @@ class Repository {
         });
     }
 
+    findAllRepo() {
+        return new Promise((resolve, reject) => {
+            this.db.all("SELECT * FROM repository", function (err, rows) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+    }
+
     incrementVisits(repoId) {
         return new Promise((resolve, reject) => {
             this.db.run(

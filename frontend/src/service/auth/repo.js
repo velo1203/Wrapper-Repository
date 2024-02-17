@@ -33,6 +33,17 @@ const deleteRepo = async (repoId) => {
     }
 };
 
+const getAllRepo = async () => {
+    try {
+        const apiClient = getApiClient();
+        const response = await apiClient.get("/api/repository/all");
+        return response.data;
+    } catch (error) {
+        console.error("GET Request Error:", error);
+        throw error;
+    }
+};
+
 const getRepoList = async () => {
     try {
         const apiClient = getApiClient();
@@ -44,4 +55,4 @@ const getRepoList = async () => {
     }
 };
 
-export { createRepo, getRepoList, deleteRepo };
+export { createRepo, getRepoList, deleteRepo, getAllRepo };

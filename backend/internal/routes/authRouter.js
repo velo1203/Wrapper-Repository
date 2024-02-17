@@ -6,6 +6,7 @@ const {
     loginRequestModel,
     registerRequestModel,
 } = require("../requestmodel/authModel");
+const authenticateAdmin = require("../middleware/authenticateAdmin");
 
 // 회원가입을 위한 POST 엔드포인트
 router.post("/register", async (req, res) => {
@@ -19,7 +20,10 @@ router.post("/register", async (req, res) => {
             req.body.password
         );
 
-        res.json({ message: "User registered successfully", userId: result.userId });
+        res.json({
+            message: "User registered successfully",
+            userId: result.userId,
+        });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -43,6 +47,16 @@ router.post("/login", async (req, res) => {
         });
     } catch (err) {
         res.status(401).json({ error: err.message });
+    }
+});
+
+router.get("/user/:id", authenticateAdmin, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await authController.getUser(id);
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 });
 

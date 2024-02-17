@@ -53,6 +53,15 @@ exports.GetRepository = async (repositoryId) => {
     }
 };
 
+exports.GetAllRepositories = async () => {
+    try {
+        const rows = await repository.findAllRepo();
+        return rows;
+    } catch (error) {
+        throw error; // 오류를 호출한 쪽으로 전파
+    }
+};
+
 // 레포지토리 삭제 함수
 exports.DeleteRepository = async (repositoryId, userID) => {
     try {

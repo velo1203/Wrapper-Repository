@@ -26,6 +26,15 @@ exports.register = async (email, username, password) => {
     }
 };
 
+exports.getUser = async (id) => {
+    try {
+        const userFound = await user.findByUserId(id);
+        return userFound;
+    } catch (err) {
+        throw err;
+    }
+};
+
 // 로그인 기능
 exports.login = async (email, password) => {
     try {

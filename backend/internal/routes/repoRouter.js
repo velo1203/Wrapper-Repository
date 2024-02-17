@@ -26,6 +26,15 @@ router.post("/", authenticate, upload.single("zipfile"), async (req, res) => {
     }
 });
 
+router.get("/all", authenticate, async (req, res) => {
+    try {
+        const repositories = await repositoryController.GetAllRepositories();
+        res.json(repositories);
+    } catch (err) {
+        res.status(err.status || 500).json({ error: err.message });
+    }
+});
+
 router.get("/", authenticate, async (req, res) => {
     try {
         const repositories = await repositoryController.GetRepositoryByUserId(

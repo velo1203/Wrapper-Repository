@@ -17,6 +17,17 @@ const login = async (email, password) => {
     }
 };
 
+const getuser = async (id) => {
+    try {
+        const apiClient = getApiClient();
+        const response = await apiClient.get(`api/user/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("GET Request Error:", error);
+        throw error;
+    }
+};
+
 const register = async (email, password, userName) => {
     try {
         const apiClient = getApiClient();
@@ -44,4 +55,4 @@ const authenticateAdmin = async () => {
     }
 };
 
-export { login, register, authenticateAdmin };
+export { login, register, authenticateAdmin, getuser };
