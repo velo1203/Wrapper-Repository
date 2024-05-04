@@ -24,7 +24,6 @@ exports.CreateRepository = async (name, description, userId, zipfile) => {
 
         const repoPath = path.join(
             process.cwd(),
-            "cmd",
             "repository",
             userFound.username,
             name
@@ -74,7 +73,6 @@ exports.DeleteRepository = async (repositoryId, userID) => {
         const userFound = await user.findByUserId(userID);
         const repoPath = path.join(
             process.cwd(),
-            "cmd",
             "repository",
             userFound.username,
             repo.name

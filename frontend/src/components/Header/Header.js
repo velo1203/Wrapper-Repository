@@ -51,13 +51,6 @@ function Header() {
                             >
                                 {username}
                             </StyledOption>
-                            <StyledOption
-                                onClick={() => {
-                                    navigate("/course");
-                                }}
-                            >
-                                Course
-                            </StyledOption>
                             {isAdmin ? (
                                 <Button
                                     type="outlined"
